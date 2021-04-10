@@ -2,13 +2,6 @@
    "presentation":[
    ],
    "blog":[
-      {
-         "date":"03/10/2021",
-		 "name": "Solar Oregon",
-		 "title" :"4",
-		 "link" : "https://www.trial.org",
-		 "description" : "My thoughts on humans"
-      }      
    ],
    "contacts":[
       
@@ -30,21 +23,22 @@
    "organize":[
    ],
    "participate":[
-      {
-         "date":"03/10/2021",
-		 "name":"Cook and Serve - Demo",
-		 "description": "Meet and Greet hosted by the Chef Jesse. Taught Chorizos and Papas",
-		 "host" :"Jesse Gamora",
-		 "type" :"Workshop",
-		 "photo" : {
-			 "name": "Dish",
-			 "description": "Photo of the Dish",
-			 "path" : "C:/Users/Admin/Downloads/Lasagna.jpg"
-		 }
-      }
  
    ],
    "resource":[
-      
+      {
+         "date":"04/10/2021",
+		 "name": "Add Act of Leadership",
+		 "type" :"Other (please describe in summary)",
+		 "link" : "https://github.com/aaprabhu1992/logLeadership",
+		 "description" : "Code that can be used to automate adding leadership acts in bulk"
+      },   
+      {
+         "date":"04/10/2021",
+		 "name": "Create an Event in Reality Hub",
+		 "type" :"Other (please describe in summary)",
+		 "link" : "https://github.com/aaprabhu1992/eventCreator",
+		 "description" : "Code that can be used to create events on Reality Hub. Will be used to create Cook and serve events in the future"
+      }      
    ]
 }

@@ -75,6 +75,12 @@ def addAllLeadership(eventObj, credentials):
             driver.switch_to.window(driver.window_handles[-1])
             addBlog(driver, blogObj)
 
+    if "resource" in eventObj:
+        allResources = eventObj["resource"]
+        for resourceObj in allResources:
+            driver.switch_to.window(driver.window_handles[-1])
+            addResource(driver, resourceObj)
+
     # All Acts have been added
     # Now Close the window
     driver.quit()
@@ -176,7 +182,42 @@ def addParticipate(driver, eventObj):
     # Only Close the TAB
     driver.close()
 
+def addResource(driver, eventObj):
+    blogEventLink = "Resource"
+    action = ActionChains(driver)    
+    attendEventLink = driver.find_element_by_partial_link_text(blogEventLink)
+    action.click(on_element = attendEventLink)
+    action.perform()
+    
+    driver.switch_to.window(driver.window_handles[-1])
+    addLeadershipButtonID = "reviews_item_form_button"
+    if not helper.HasPageLoadedIDCheck(driver, REALITY_HUB_TIMEOUT, addLeadershipButtonID):
+        print("Page has not loaded in time")
+        return
+    resourceDateID = "date_406"
+    resourceNameID = "textField_407"
+    linkID = "link_410"
+    textAreaID = "textarea_409"
+    driver.find_element_by_id(resourceDateID).send_keys(eventObj["date"])
+    driver.find_element_by_id(resourceNameID).send_keys(eventObj["name"])
+    helper.ClearAndAddElement(driver, linkID, eventObj["link"])
+    driver.find_element_by_id(textAreaID).send_keys(eventObj["description"])
 
+
+    # Radio Button
+    elements = driver.find_elements_by_tag_name("label")
+    for elem in elements:
+        if elem.text == eventObj["type"]:
+            elem.click()
+
+    
+    helper.PauseForEffect(REALITY_HUB_TIMEOUT)
+    driver.find_element_by_id(addLeadershipButtonID).click()    
+    helper.PauseForEffect(REALITY_HUB_TIMEOUT)
+    
+    # Only Close the TAB
+    driver.close()
+    
 
 def addBlog(driver, eventObj):    
     blogEventLink = "Blog"
@@ -198,7 +239,7 @@ def addBlog(driver, eventObj):
     driver.find_element_by_id(blogDateID).send_keys(eventObj["date"])
     driver.find_element_by_id(blogNameID).send_keys(eventObj["name"])
     driver.find_element_by_id(blogTitleID).send_keys(eventObj["title"])
-    driver.find_element_by_id(linkID).send_keys(eventObj["link"])
+    helper.ClearAndAddElement(driver, linkID, eventObj["link"])
     driver.find_element_by_id(textAreaID).send_keys(eventObj["description"])
     
     helper.PauseForEffect(REALITY_HUB_TIMEOUT)
