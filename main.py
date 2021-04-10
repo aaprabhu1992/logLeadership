@@ -4,7 +4,6 @@ import argparse
 
 import helper
 import realityHub
-import pachamama
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-fileName',
@@ -38,4 +37,4 @@ helper.PrettyPrintJSON(realityHubCred)
 if "organize" in eventObj:
     allOrganizations = eventObj["organize"]
     for organizeObj in allOrganizations:
-        realityHub.addOrganize(organizeObj)
+        realityHub.addOrganize(organizeObj, realityHubCred)

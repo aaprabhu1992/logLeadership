@@ -24,10 +24,23 @@
    ],
    "organize":[
       {
-         
+         "date":"03/10/2021",
+		 "name":"Cook and Serve - Meet and Greet",
+		 "description": "Meet and Greet organized with the Chef Jesse and core team of Cook and Serve",
+		 "attendance" :"4",
+		 "type" :"Workshop",
+		 "photo" : {
+			 "name": "Dish",
+			 "description": "Photo of the Dish",
+			 "path" : "C:/Users/Admin/Downloads/Lasagna.jpg"
+		 }
       },
       {
-         
+         "date":"03/10/2021",
+		 "name":"Cook and Serve - Demo",
+		 "description": "Demo organized with the Chef Jesse and attendees",
+		 "attendance" :"12",
+		 "type" :"Workshop"
       }      
    ],
    "participate":[

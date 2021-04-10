@@ -7,8 +7,17 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
 
 REALITY_HUB_TIMEOUT = 10
+def addPhoto(driver, photoObj):
+    photoNameID = "file_419_File Name"
+    photoDescID = "file_419_File Description"
+    addPhotoButtonID = "file_419"
+    driver.find_element_by_id(photoNameID).send_keys(photoObj["name"])
+    driver.find_element_by_id(photoDescID).send_keys(photoObj["description"])
+    driver.find_element_by_id(addPhotoButtonID).send_keys(photoObj["path"])
 
-def addEvent(eventObj, credentials):    
+
+
+def addOrganize(eventObj, credentials):    
     eventURL = None
     driver = webdriver.Chrome()
     driver.maximize_window()
@@ -41,20 +50,47 @@ def addEvent(eventObj, credentials):
     action.perform()
     # Need to see it on the screen before you click
     helper.PauseForEffect(1)
-    
+
     # Need to create a new chain every time
     action = ActionChains(driver)    
     attendEventLink = driver.find_element_by_partial_link_text(attendEventText)
     action.click(on_element = attendEventLink)
-    action.perform()
-    
-    
+    action.perform()    
     helper.PauseForEffect(REALITY_HUB_TIMEOUT)
+
+
     organizeEventLink = "Organize"
     action = ActionChains(driver)    
     attendEventLink = driver.find_element_by_partial_link_text(organizeEventLink)
     action.click(on_element = attendEventLink)
     action.perform()
+    
+    driver.switch_to.window(driver.window_handles[-1])
+    addLeadershipButtonID = "reviews_item_form_button"
+    if not helper.HasPageLoadedIDCheck(driver, REALITY_HUB_TIMEOUT, addLeadershipButtonID):
+        print("Page has not loaded in time")
+        return eventURL
+    eventDateID = "date_412"
+    eventNameID = "textField_413"
+    eventAttendanceID = "textField_415"
+    textAreaID = "textarea_418"
+    driver.find_element_by_id(eventDateID).send_keys(eventObj["date"])
+    driver.find_element_by_id(eventNameID).send_keys(eventObj["name"])
+    driver.find_element_by_id(eventAttendanceID).send_keys(eventObj["attendance"])
+    driver.find_element_by_id(textAreaID).send_keys(eventObj["description"])
+    
+    # Radio Button
+    elements = driver.find_elements_by_tag_name("label")
+    for elem in elements:
+        if elem.text == eventObj["type"]:
+            elem.click()
+    if "photo" in eventObj:
+        addPhoto(driver, eventObj["photo"])
+    helper.PauseForEffect(REALITY_HUB_TIMEOUT)
+    driver.find_element_by_id(addLeadershipButtonID).click()    
+    helper.PauseForEffect(REALITY_HUB_TIMEOUT)
+    driver.quit()
+    
     
     
     
