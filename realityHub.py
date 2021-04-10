@@ -63,6 +63,18 @@ def addAllLeadership(eventObj, credentials):
             driver.switch_to.window(driver.window_handles[-1])
             addAssist(driver, assistObj)
 
+    if "participate" in eventObj:
+        allParticipates = eventObj["participate"]
+        for participateObj in allParticipates:
+            driver.switch_to.window(driver.window_handles[-1])
+            addParticipate(driver, participateObj)
+
+    if "blog" in eventObj:
+        allBlogs = eventObj["blog"]
+        for blogObj in allBlogs:
+            driver.switch_to.window(driver.window_handles[-1])
+            addBlog(driver, blogObj)
+
     # All Acts have been added
     # Now Close the window
     driver.quit()
@@ -85,6 +97,13 @@ def addPhotoAssist(driver, photoObj):
     driver.find_element_by_id(photoDescID).send_keys(photoObj["description"])
     driver.find_element_by_id(addPhotoButtonID).send_keys(photoObj["path"])
 
+def addPhotoParticipate(driver, photoObj):
+    photoNameID = "file_428_File Name"
+    photoDescID = "file_428_File Description"
+    addPhotoButtonID = "file_428"
+    driver.find_element_by_id(photoNameID).send_keys(photoObj["name"])
+    driver.find_element_by_id(photoDescID).send_keys(photoObj["description"])
+    driver.find_element_by_id(addPhotoButtonID).send_keys(photoObj["path"])
 
 
 def addOrganize(driver, eventObj):    
@@ -115,6 +134,73 @@ def addOrganize(driver, eventObj):
             elem.click()
     if "photo" in eventObj:
         addPhotoOrganize(driver, eventObj["photo"])
+    helper.PauseForEffect(REALITY_HUB_TIMEOUT)
+    driver.find_element_by_id(addLeadershipButtonID).click()    
+    helper.PauseForEffect(REALITY_HUB_TIMEOUT)
+    
+    # Only Close the TAB
+    driver.close()
+
+def addParticipate(driver, eventObj):    
+    participateEventLink = "Participate"
+    action = ActionChains(driver)    
+    attendEventLink = driver.find_element_by_partial_link_text(participateEventLink)
+    action.click(on_element = attendEventLink)
+    action.perform()
+    
+    driver.switch_to.window(driver.window_handles[-1])
+    addLeadershipButtonID = "reviews_item_form_button"
+    if not helper.HasPageLoadedIDCheck(driver, REALITY_HUB_TIMEOUT, addLeadershipButtonID):
+        print("Page has not loaded in time")
+        return
+    eventDateID = "date_421"
+    eventNameID = "textField_422"
+    eventHostID = "textField_423"
+    textAreaID = "textarea_427"
+    driver.find_element_by_id(eventDateID).send_keys(eventObj["date"])
+    driver.find_element_by_id(eventNameID).send_keys(eventObj["name"])
+    driver.find_element_by_id(eventHostID).send_keys(eventObj["host"])
+    driver.find_element_by_id(textAreaID).send_keys(eventObj["description"])
+    
+    # Radio Button
+    elements = driver.find_elements_by_tag_name("label")
+    for elem in elements:
+        if elem.text == eventObj["type"]:
+            elem.click()
+    if "photo" in eventObj:
+        addPhotoParticipate(driver, eventObj["photo"])
+    helper.PauseForEffect(REALITY_HUB_TIMEOUT)
+    driver.find_element_by_id(addLeadershipButtonID).click()    
+    helper.PauseForEffect(REALITY_HUB_TIMEOUT)
+    
+    # Only Close the TAB
+    driver.close()
+
+
+
+def addBlog(driver, eventObj):    
+    blogEventLink = "Blog"
+    action = ActionChains(driver)    
+    attendEventLink = driver.find_element_by_partial_link_text(blogEventLink)
+    action.click(on_element = attendEventLink)
+    action.perform()
+    
+    driver.switch_to.window(driver.window_handles[-1])
+    addLeadershipButtonID = "reviews_item_form_button"
+    if not helper.HasPageLoadedIDCheck(driver, REALITY_HUB_TIMEOUT, addLeadershipButtonID):
+        print("Page has not loaded in time")
+        return
+    blogDateID = "date_381"
+    blogNameID = "textField_382"
+    blogTitleID = "textField_383"
+    linkID = "link_385"
+    textAreaID = "textarea_386"
+    driver.find_element_by_id(blogDateID).send_keys(eventObj["date"])
+    driver.find_element_by_id(blogNameID).send_keys(eventObj["name"])
+    driver.find_element_by_id(blogTitleID).send_keys(eventObj["title"])
+    driver.find_element_by_id(linkID).send_keys(eventObj["link"])
+    driver.find_element_by_id(textAreaID).send_keys(eventObj["description"])
+    
     helper.PauseForEffect(REALITY_HUB_TIMEOUT)
     driver.find_element_by_id(addLeadershipButtonID).click()    
     helper.PauseForEffect(REALITY_HUB_TIMEOUT)
