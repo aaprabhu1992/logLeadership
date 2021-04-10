@@ -17,7 +17,11 @@
       
    ],
    "assist":[
-      
+      {
+         "date":"03/10/2021",
+		 "description": "Meet and Greet organized with the Chef Jesse and core team of Cook and Serve",
+		 "attendance" :"4"  
+      }
    ],
    "mentor":[
       
