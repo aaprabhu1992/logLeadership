@@ -2,6 +2,8 @@ import sys
 import json
 import argparse
 
+
+
 import helper
 import realityHub
 
@@ -34,13 +36,4 @@ except OSError:
 helper.PrettyPrintJSON(realityHubCred)
 
 
-if "organize" in eventObj:
-    allOrganizations = eventObj["organize"]
-    for organizeObj in allOrganizations:
-        realityHub.addOrganize(organizeObj, realityHubCred)
-
-
-if "assist" in eventObj:
-    allAssists = eventObj["assist"]
-    for assistObj in allAssists:
-        realityHub.addAssist(assistObj, realityHubCred)
+realityHub.addAllLeadership(eventObj, realityHubCred)
