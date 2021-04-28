@@ -210,10 +210,18 @@ def addResource(driver, eventObj):
         if elem.text == eventObj["type"]:
             elem.click()
 
-    
+    # Climate Justice Question
+    justiceID = ""
+    if eventObj["justice"] == "yes":
+        justiceID = "checkboxes_450_0"
+    if eventObj["justice"] == "no":
+        justiceID = "checkboxes_450_1"
+    driver.find_element_by_id(justiceID).click()
+
     helper.PauseForEffect(REALITY_HUB_TIMEOUT)
     driver.find_element_by_id(addLeadershipButtonID).click()    
     helper.PauseForEffect(REALITY_HUB_TIMEOUT)
+    
     
     # Only Close the TAB
     driver.close()

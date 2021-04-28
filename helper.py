@@ -32,7 +32,7 @@ def HasPageLoadedIDCheck(driver, timeout, elementID):
 
 def HasPageLoadedClassCheck(driver, timeout, classID):
     try:
-        element_present = EC.presence_of_element_located((By.ID, classID))
+        element_present = EC.presence_of_element_located((By.CLASS_NAME, classID))
         WebDriverWait(driver, timeout).until(element_present)
         return True
     except TimeoutException:
